@@ -1,0 +1,9 @@
+{
+  "name": "vntomp3",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Vietnamese text to MP3 on GitHub Pages (client-only)",
+  "scripts": {
+    "start": "python3 -m http.server 3000"
+  }
+}
