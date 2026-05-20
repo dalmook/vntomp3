@@ -1,0 +1,19 @@
+services:
+  vntomp3-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vntomp3-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+      CORS_ALLOW_ORIGIN: "https://<your-github-username>.github.io"
+      GOOGLE_APPLICATION_CREDENTIALS: "/run/secrets/gcp-sa.json"
+      GOOGLE_TTS_LANGUAGE: "vi-VN"
+      GOOGLE_TTS_VOICE: "vi-VN-Chirp3-HD-Achernar"
+      GOOGLE_TTS_SPEAKING_RATE: "1.0"
+      GOOGLE_TTS_PITCH: "0"
+    volumes:
+      - ./secrets/gcp-sa.json:/run/secrets/gcp-sa.json:ro
