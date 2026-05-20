@@ -1,9 +1,14 @@
 {
   "name": "vntomp3",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
-  "description": "Vietnamese text to MP3 on GitHub Pages (client-only)",
+  "description": "Vietnamese text to MP3 API for Synology Container Manager",
+  "main": "server.js",
   "scripts": {
-    "start": "python3 -m http.server 3000"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google-cloud/text-to-speech": "^6.2.0",
+    "express": "^4.19.2"
   }
 }

@@ -2,32 +2,32 @@ const express = require('express');
 const textToSpeech = require('@google-cloud/text-to-speech');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT || 3000);
 
 const client = new textToSpeech.TextToSpeechClient();
 
 app.use(express.json({ limit: '1mb' }));
-app.use(express.static('public'));
 
-const splitSentences = (input) =>
-  input
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
+app.use((req, res, next) => {
+  const allowedOrigin = process.env.CORS_ALLOW_ORIGIN || '*';
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(204).send('');
+  return next();
+});
 
-app.post('/api/tts', async (req, res) => {
+app.get('/healthz', (_req, res) => res.json({ ok: true }));
+
+app.post('/tts', async (req, res) => {
   try {
-    const { text } = req.body;
+    const text = String(req.body?.text || '').trim();
+    if (!text) return res.status(400).json({ error: 'text is required' });
 
-    if (typeof text !== 'string' || text.trim().length === 0) {
-      return res.status(400).json({ error: '텍스트를 입력해주세요.' });
-    }
-
-    const lines = splitSentences(text);
-    const requests = lines.map((line) => ({
-      input: { text: line },
+    const [response] = await client.synthesizeSpeech({
+      input: { text },
       voice: {
-        languageCode: 'vi-VN',
+        languageCode: process.env.GOOGLE_TTS_LANGUAGE || 'vi-VN',
         name: process.env.GOOGLE_TTS_VOICE || 'vi-VN-Chirp3-HD-Achernar'
       },
       audioConfig: {
@@ -35,32 +35,20 @@ app.post('/api/tts', async (req, res) => {
         speakingRate: Number(process.env.GOOGLE_TTS_SPEAKING_RATE || 1.0),
         pitch: Number(process.env.GOOGLE_TTS_PITCH || 0)
       }
-    }));
+    });
 
-    const audioBuffers = [];
-
-    for (const request of requests) {
-      const [response] = await client.synthesizeSpeech(request);
-      if (!response.audioContent) {
-        throw new Error('오디오 생성에 실패했습니다.');
-      }
-      audioBuffers.push(Buffer.from(response.audioContent, 'base64'));
+    if (!response.audioContent) {
+      return res.status(500).json({ error: 'empty audio content' });
     }
 
-    const merged = Buffer.concat(audioBuffers);
-
     res.setHeader('Content-Type', 'audio/mpeg');
-    res.setHeader('Content-Disposition', 'attachment; filename="vietnamese-tts.mp3"');
-    return res.send(merged);
+    return res.send(Buffer.from(response.audioContent, 'base64'));
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      error:
-        'TTS 생성 실패. Google Cloud 인증 키(GOOGLE_APPLICATION_CREDENTIALS)와 음성 이름을 확인해주세요.'
-    });
+    return res.status(500).json({ error: 'TTS failed' });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`vntomp3 api listening on :${port}`);
 });

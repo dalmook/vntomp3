@@ -1,39 +1,62 @@
 # vntomp3
 
-네, 가능합니다. **GitHub Pages(프론트) + Firebase Functions(백엔드 API)** 구조로 쓰면 됩니다.
+시놀로지 **Container Manager**에서 `yml`로 한 번에 실행하는 방식입니다.  
+구성은 `GitHub Pages(프론트) + Synology Docker API(백엔드)` 입니다.
 
-## 구조
+## 1) 준비 파일
 
-- GitHub Pages: 화면(UI), 텍스트 입력, 결과 재생/다운로드
-- Firebase Functions: Google Cloud TTS API 호출 (서비스 계정 키는 서버 측에서만 사용)
+- `docker-compose.synology.yml`
+- `Dockerfile`
+- `server.js`
+- `public/config.js` (직접 생성)
+- `secrets/gcp-sa.json` (Google 서비스 계정 키 JSON)
 
-즉, 키는 Firebase 쪽에만 두고, GitHub에서는 API만 호출합니다.
+> 주의: `gcp-sa.json`은 절대 GitHub에 커밋하지 마세요.
 
-## 1) Firebase Functions 쪽 준비
+## 2) 시놀로지에서 한방 실행 (Container Manager)
 
-1. Firebase 프로젝트 생성
-2. Functions 활성화
-3. Functions 런타임에서 Google Cloud TTS 사용
-4. `tts` HTTPS 함수 배포
+1. 프로젝트 폴더 업로드 (예: `/volume1/docker/vntomp3`)
+2. 같은 폴더에 키 파일 배치: `/volume1/docker/vntomp3/secrets/gcp-sa.json`
+3. Container Manager → **프로젝트** → **생성**
+4. 소스: `docker-compose.synology.yml` 선택
+5. 배포
 
-참고용 함수 코드는 `firebase-function-example.js` 파일에 포함했습니다.
+`docker-compose.synology.yml`은 아래 항목을 포함합니다.
 
-## 2) GitHub Pages 쪽 설정
+- 포트 `3000:3000`
+- 키 파일 마운트: `./secrets/gcp-sa.json:/run/secrets/gcp-sa.json:ro`
+- 환경변수 `GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/gcp-sa.json`
+- CORS 허용 도메인 `CORS_ALLOW_ORIGIN=https://<your-github-username>.github.io`
 
-`public/config.example.js`를 `public/config.js`로 복사하고 API URL 입력:
+## 3) GitHub Pages 연결
+
+`public/config.js` 생성:
 
 ```js
-window.VNTOMP3_API_BASE_URL = 'https://us-central1-<your-project>.cloudfunctions.net';
+window.VNTOMP3_API_BASE_URL = 'https://<your-nas-domain-or-ddns>:3000';
 ```
 
-그 다음 `public/index.html` + `public/app.js`를 GitHub Pages로 배포하면 됩니다.
+그다음 `public/`를 GitHub Pages로 배포하면, 프론트가 NAS API `/tts`를 호출합니다.
 
-## 3) 동작 방식
+## 4) API 테스트
 
-- 여러 줄 입력하면 줄 단위로 `POST {API_BASE_URL}/tts` 호출
-- 각 응답 MP3를 브라우저에서 재생/다운로드 링크로 표시
+헬스체크:
 
-## 주의사항
+```bash
+curl http://<nas-ip>:3000/healthz
+```
 
-- 완전 무서버(GitHub Pages only)로는 공식 Google Cloud TTS 키 보호가 불가능합니다.
-- 따라서 **Firebase Functions 같은 서버리스 백엔드가 필수**입니다.
+TTS 테스트:
+
+```bash
+curl -X POST "http://<nas-ip>:3000/tts" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"Xin chào"}' \
+  --output sample.mp3
+```
+
+## 5) 보안 권장
+
+- 키는 `secrets/`에만 두고 GitHub 업로드 금지
+- `CORS_ALLOW_ORIGIN`을 본인 GitHub Pages 도메인으로 제한
+- 가능하면 시놀로지 리버스 프록시 + HTTPS 인증서 적용
