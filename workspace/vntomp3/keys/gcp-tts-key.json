@@ -1,1 +1,13 @@
-ㅁ
+{
+  "type": "service_account",
+  "project_id": "acquired-badge-469703-b2",
+  "private_key_id": "1266db533f83fb68a47da14ae48449941587bbd7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC5iGwP/vs0uxqP\nq5OKxn5iPTdKVNAzYd60ZPQPG23f0nQlOwm7UNEJYeWCoOVMouSy8akXtvgzgR6j\nAOG+HSoDD+WRZaVU3oO/D8ePXKgDz4D9ClIKnm6/hJKoUWuKQYxHxo1ikXycJeyt\nnDKUl2c4iWbfiywdfGMkSrRFycoVtw/HqFJT9rg8KNtS4itieJXqyTc+riAId/tT\nIQonyCstkd1SjPUGysUASy8N9vPYpSjinDx4i2xVNRKPRRnPaZOyBj7tMaM1wHy/\nYDfg2C9DcE9yqewo+Nvr4w7kqtg6CUXR2Osh1rIVsYpBg8j2wbl1oQC65Wv7cXDF\nQPWzMxdVAgMBAAECggEAT3ToarVVmhCjYHInnuBBUgtLeY73F3pLqVAu4aVqmdeE\nnEk7crg6vdzqMNZ9PSPp8+Tg+OIIS+55U2/WPdg5nNQbCfjRJJajL5kvautQnUkp\nwbTAzAFsBqNdN66e8rf9vuN+u375MdpgET36v35T23ek0gnFW99gijNgHx87Z66i\n2BiF57OyQRadR7vj+eKGSIKHAR81xaIlrVZedmzic7ZjCcknkm/WLB1Tj7DzfyDe\n4+I90zJplSkFFLKkTAPJjmGkMXmEDBKNYB+NwvOOOtDltbfDaIh5T9/KvW2qq8sp\nOgUXz1eQEZjjAK4fIuyX2XyVZNnK6zZb2gzCG6gBxQKBgQDgbbfKkwcJT8iy3ijq\nNYtqH09ine3693T1o1A07H5DimbWV728pn1HxdDlvL5TX5EOIWm/xzeDsJWc7hen\nJ8NDGLtMq9VtLIQCgxA3OedIj002xoC6vH6yTAMX/Q8lvcuOxWQfC/lrJHVoLUK5\n4PGnYRgIXiRpPFh8wM6mIL6nuwKBgQDTofcK7ichZO3zQkhkwjlbhl4ZE0pf/7W+\n+eMhrUVkG016zAj4qQ60HDD5eLqU43aAhTBRpYOMx6kPzhLjMXxmA3EHzqghOcOH\nTMR6qy3tqNzCYcZK5WVSjCLQ54y84QxaETST3AGaOZoAVdL4QT2PwhhfQwfrc4lL\n3g9F8hQkLwKBgQDc19qlwqyH4zTRnn+QiQQZd5n8pwAJl/xFw2En0xgkikrL3Sde\nPk7Fk8kOaP64uC/bQdH336enNNrkw/4OhLhGjE2zEtxARC/a8PHCBn6rDiijIA6I\nsvfRp67bqi9/qhZm9aKiUnwrjILj8rXYh5wEYyzs/wbBb5p7mJdBLrOuBQKBgQCK\nv9puwRrIixpybRd3b9sZBWw19m7Bp62pir19+9LNwhS3GIQdOwFX1k/Jj3yMVuD/\ne9LlBKXNq61MnmfFqlELtN/rJXMXbX6i+xKp9gbDlP0/N8lAm0slppjA675aqxVl\nC3i0I/6s9WzhIWOSvXs2ACPoeNL9bB8srWbIDeFkowKBgAmsln8iMY28BCZgRdUz\n44Bp8qbT6eTRwoZPRDioaR9ssb9WHhDJVURZQEQ0o0V7L4TJEmtqISfdFxWhLBNW\nSD2z+/Tlc0PNWuJEtwbwLsfeQ6s+b+4I06/pg8AHmExkszCdE/Dhg+N3OU+Z5wCr\nsHK8apAWihirgs3rlsf4QOkG\n-----END PRIVATE KEY-----\n",
+  "client_email": "vietnam-tts-test@acquired-badge-469703-b2.iam.gserviceaccount.com",
+  "client_id": "100112837933302131256",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vietnam-tts-test%40acquired-badge-469703-b2.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
