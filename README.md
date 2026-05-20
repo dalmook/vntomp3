@@ -60,3 +60,13 @@ curl -X POST "http://<nas-ip>:3000/tts" \
 - 키는 `secrets/`에만 두고 GitHub 업로드 금지
 - `CORS_ALLOW_ORIGIN`을 본인 GitHub Pages 도메인으로 제한
 - 가능하면 시놀로지 리버스 프록시 + HTTPS 인증서 적용
+
+## 6) 문장 파일에서 MP3 생성
+
+문장을 텍스트 파일로 저장한 뒤 아래처럼 MP3를 생성할 수 있습니다.
+
+```bash
+node scripts/generate-mp3.js public/texts/interview-intro.vi.txt public/audio/vi-native-interview-intro.mp3
+```
+
+> 실행 전 `GOOGLE_APPLICATION_CREDENTIALS` 환경변수에 서비스 계정 키 경로가 설정되어 있어야 합니다.
