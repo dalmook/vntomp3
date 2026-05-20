@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vietnamese TTS to MP3</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>베트남어 → MP3 변환기</h1>
+      <p>
+        문장 1개 또는 여러 문장을 줄바꿈으로 입력하세요. 고품질 Google Cloud TTS 음성으로 MP3를 생성합니다.
+      </p>
+
+      <label for="text">베트남어 텍스트</label>
+      <textarea id="text" placeholder="Xin chào\nTôi là trợ lý AI" rows="10"></textarea>
+
+      <button id="convertBtn">MP3 생성</button>
+      <p id="status"></p>
+      <audio id="player" controls style="display: none"></audio>
+      <a id="downloadLink" style="display: none">MP3 다운로드</a>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
