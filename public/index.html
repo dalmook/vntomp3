@@ -3,25 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vietnamese TTS to MP3</title>
+    <title>Vietnamese TTS to MP3 (GitHub Pages)</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="container">
-      <h1>베트남어 → MP3 변환기</h1>
+      <h1>베트남어 TTS (GitHub Pages 전용)</h1>
       <p>
-        문장 1개 또는 여러 문장을 줄바꿈으로 입력하세요. 고품질 Google Cloud TTS 음성으로 MP3를 생성합니다.
+        서버 없이 GitHub Pages에서 동작하도록, 브라우저에서 바로 재생/다운로드 링크를 생성합니다.
       </p>
 
-      <label for="text">베트남어 텍스트</label>
+      <label for="text">베트남어 텍스트 (줄바꿈으로 여러 문장)</label>
       <textarea id="text" placeholder="Xin chào\nTôi là trợ lý AI" rows="10"></textarea>
 
-      <button id="convertBtn">MP3 생성</button>
+      <div class="actions">
+        <button id="convertBtn">오디오 링크 생성</button>
+      </div>
+
       <p id="status"></p>
-      <audio id="player" controls style="display: none"></audio>
-      <a id="downloadLink" style="display: none">MP3 다운로드</a>
+      <section id="results" class="results"></section>
+
+      <details>
+        <summary>중요 제한사항</summary>
+        <ul>
+          <li>공식 Google Cloud TTS API는 서버 인증이 필요하여 GitHub Pages 단독으로는 사용 불가</li>
+          <li>여러 문장을 하나의 MP3로 병합하려면 서버 또는 별도 오디오 처리 도구 필요</li>
+          <li>브라우저/CORS 정책에 따라 일부 환경에서 자동 다운로드가 제한될 수 있음</li>
+        </ul>
+      </details>
     </main>
 
+    <script src="config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
